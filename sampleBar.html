@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+    .bar {
+        fill: steelblue;
+    }
+    
+    .bar:hover {
+        fill: brown;
+    }
+    
+    .axis {
+        font: 10px sans-serif;
+    }
+    
+    .axis path,
+    .axis line {
+        fill: none;
+        stroke: #000;
+        shape-rendering: crispEdges;
+    }
+    
+    .x.axis path {
+        display: none;
+    }
+</style>
+
+<body>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script>
+        var margin = {
+                top: 20,
+                right: 20,
+                bottom: 30,
+                left: 40
+            },
+            width = 560 - margin.left - margin.right,
+            height = 300 - margin.top - margin.bottom;
+
+        var x = d3.scale.ordinal().rangeRoundBands([0, width], .2);
+        var y = d3.scale.linear()
+            .range([height, 0]);
+
+        var xAxis = d3.svg.axis()
+            .scale(x)
+            .orient("bottom");
+
+        var yAxis = d3.svg.axis()
+            .scale(y)
+            .orient("left");
+
+        var svg = d3.select("body").append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+        var data = [
+            {
+                "b1": "8031",
+                "b2": "13986",
+                "common_count": "190",
+                "state": "AZ",
+                "city": "Phoenix",
+                "review_count": "1117",
+                "stars": "4",
+                "b1_cat": "Nightlife",
+                "b2_cat": "Restaurants"
+    },
+            {
+                "b1": "8031",
+                "b2": "10304",
+                "common_count": "152",
+                "state": "AZ",
+                "city": "Phoenix",
+                "review_count": "1117",
+                "stars": "4",
+                "b1_cat": "Nightlife",
+                "b2_cat": "Restaurants"
+    },
+            {
+                "b1": "8031",
+                "b2": "8284",
+                "common_count": "119",
+                "state": "AZ",
+                "city": "Phoenix",
+                "review_count": "1117",
+                "stars": "4",
+                "b1_cat": "Nightlife",
+                "b2_cat": "Nightlife"
+    },
+            {
+                "b1": "8031",
+                "b2": "8119",
+                "common_count": "140",
+                "state": "AZ",
+                "city": "Phoenix",
+                "review_count": "1117",
+                "stars": "4",
+                "b1_cat": "Nightlife",
+                "b2_cat": "Restaurants"
+    },
+            {
+                "b1": "8031",
+                "b2": "12036",
+                "common_count": "122",
+                "state": "AZ",
+                "city": "Phoenix",
+                "review_count": "1117",
+                "stars": "4",
+                "b1_cat": "Nightlife",
+                "b2_cat": "Restaurants"
+    },
+            {
+                "b1": "8031",
+                "b2": "13181",
+                "common_count": "127",
+                "state": "AZ",
+                "city": "Phoenix",
+                "review_count": "1117",
+                "stars": "4",
+                "b1_cat": "Nightlife",
+                "b2_cat": "Nightlife"
+    },
+            {
+                "b1": "8031",
+                "b2": "12626",
+                "common_count": "122",
+                "state": "AZ",
+                "city": "Phoenix",
+                "review_count": "1117",
+                "stars": "4",
+                "b1_cat": "Nightlife",
+                "b2_cat": "Nightlife"
+    },
+            {
+                "b1": "8031",
+                "b2": "12696",
+                "common_count": "104",
+                "state": "AZ",
+                "city": "Phoenix",
+                "review_count": "1117",
+                "stars": "4",
+                "b1_cat": "Nightlife",
+                "b2_cat": "Nightlife"
+    },
+            {
+                "b1": "8031",
+                "b2": "11204",
+                "common_count": "173",
+                "state": "AZ",
+                "city": "Phoenix",
+                "review_count": "1117",
+                "stars": "4",
+                "b1_cat": "Nightlife",
+                "b2_cat": "Nightlife"
+    },
+            {
+                "b1": "8031",
+                "b2": "17974",
+                "common_count": "122",
+                "state": "AZ",
+                "city": "Phoenix",
+                "review_count": "1117",
+                "stars": "4",
+                "b1_cat": "Nightlife",
+                "b2_cat": "Nightlife"
+    },
+            {
+                "b1": "8031",
+                "b2": "12099",
+                "common_count": "108",
+                "state": "AZ",
+                "city": "Phoenix",
+                "review_count": "1117",
+                "stars": "4",
+                "b1_cat": "Nightlife",
+                "b2_cat": "Food"
+    },
+            {
+                "b1": "8031",
+                "b2": "8335",
+                "common_count": "112",
+                "state": "AZ",
+                "city": "Phoenix",
+                "review_count": "1117",
+                "stars": "4",
+                "b1_cat": "Nightlife",
+                "b2_cat": "Nightlife"
+    },
+            {
+                "b1": "8031",
+                "b2": "13468",
+                "common_count": "161",
+                "state": "AZ",
+                "city": "Phoenix",
+                "review_count": "1117",
+                "stars": "4",
+                "b1_cat": "Nightlife",
+                "b2_cat": "Restaurants"
+    },
+            {
+                "b1": "8031",
+                "b2": "8048",
+                "common_count": "147",
+                "state": "AZ",
+                "city": "Phoenix",
+                "review_count": "1117",
+                "stars": "4",
+                "b1_cat": "Nightlife",
+                "b2_cat": "Restaurants"
+    }
+];
+        d3.tsv("dta.tsv", type, function (error, data2) {
+            console.log(JSON.stringify(data));
+            x.domain(data.map(function (d) {
+                return d.b2;
+            }));
+            y.domain([0, d3.max(data, function (d) {
+                return d.common_count;
+            })]);
+
+            svg.append("g")
+                .attr("class", "x axis")
+                .attr("transform", "translate(0," + height + ")")
+                .call(xAxis);
+
+            //            svg.append("g")
+            //                .attr("class", "y axis")
+            //                .call(yAxis)
+            //                .append("text")
+            //                .attr("transform", "rotate(90)")
+            //                .attr("y", 6)
+            //                .attr("dy", ".71em")
+            //                .style("text-anchor", "end")
+            //                .text("Frequency");
+
+            svg.selectAll(".bar")
+                .data(data)
+                .enter().append("rect")
+                .attr("class", "bar")
+                .attr("x", function (d) {
+                    return x(d.b2);
+                })
+                .attr("width", x.rangeBand())
+                .attr("y", function (d) {
+                    return y(d.common_count);
+                })
+                .attr("height", function (d) {
+                    return height - y(d.common_count);
+                });
+
+        });
+
+        function type(d) {
+            d.frequency = +d.frequency;
+            return d;
+        }
+    </script>
